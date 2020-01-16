@@ -2,6 +2,7 @@ import React from 'react';
 import { Cell } from './Cell';
 import './Grid.scss';
 
+
 const generate = config => {
   const { random, round } = Math;
   const { xLength, yLength, width, height } = config;
@@ -12,8 +13,13 @@ const generate = config => {
 
   for (let y = 0; y < yLength; y += 1) {
     for (let x = 0; x < xLength; x += 1) {
-      const cell = { config, x, y, offset: { x: x * width, y: y * height }, value: round(random()) };
+      const offset = { x: x * width, y: y * height };
+      const cell = { config, x, y, offset, value: !!round(random()) };
       cell.view = <Cell cell={cell} key={`${x}${y}`} />;
+      cell.update = () => {
+        cell.value = !cell.value;
+        cell.updateView();
+      };
 
       if (matrixes.yx[y]) matrixes.yx[y][x] = cell;
       else matrixes.yx[y] = [cell];
