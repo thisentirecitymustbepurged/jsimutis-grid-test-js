@@ -1,0 +1,9 @@
+import React, { useState } from 'react';
+
+export const Cell = ({ cell }) => {
+  const { value, config: { width, height }, offset: { x: left, y: top } } = cell;
+  const [flag, update] = useState(false);
+  cell.updateView = () => update(!flag);
+
+  return <div className="cell" style={{ width, height, left, top }}>{value}</div>;
+};

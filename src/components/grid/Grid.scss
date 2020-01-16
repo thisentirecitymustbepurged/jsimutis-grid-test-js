@@ -1,0 +1,12 @@
+.grid {
+  margin: 50px;
+  position: relative;
+}
+
+.cell {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
+}
