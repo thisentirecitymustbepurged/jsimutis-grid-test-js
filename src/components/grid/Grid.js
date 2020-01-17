@@ -2,6 +2,21 @@ import React from 'react';
 import { Cell } from './Cell';
 import './Grid.scss';
 
+const extractSameAdjacent = array => array.reduce((adjacentsByValue, cell, i) => {
+  const cellPrev = array[i - 1];
+  const valuePrev = cellPrev ? cellPrev.value : {};
+  const { value } = cell;
+
+  if (!adjacentsByValue[value]) adjacentsByValue[value] = [];
+
+  const adjacents = adjacentsByValue[value];
+
+  if (valuePrev !== value) adjacents.push([]);
+
+  adjacents[adjacents.length - 1].push(cell);
+
+  return adjacentsByValue;
+}, {});
 
 const generate = config => {
   const { random, round } = Math;
@@ -34,8 +49,9 @@ const generate = config => {
   return matrixes;
 };
 
-const matrixes = generate({ xLength: 5, yLength: 5, width: 50, height: 50 });
+const matrixes = generate({ xLength: 10, yLength: 5, width: 50, height: 50 });
 
 window.matrixes = matrixes;
+window.extractSameAdjacent = extractSameAdjacent;
 
 export const Grid = () => <div className="grid">{matrixes.yx.map(arr => arr.map(cell => cell.view))}</div>;
