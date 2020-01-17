@@ -9,7 +9,7 @@ import React from 'react';
 
 import { Grid } from 'components';
 
-export const App = () => <Grid />
+export const App = () => <Grid />;
 
 // export const App = () => (
 //   <Router>
