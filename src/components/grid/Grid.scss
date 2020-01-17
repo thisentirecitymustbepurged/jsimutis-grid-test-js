@@ -4,9 +4,11 @@
 }
 
 .cell {
+  box-sizing: border-box;
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
 }
