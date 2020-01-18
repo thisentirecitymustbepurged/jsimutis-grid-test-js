@@ -1,23 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Cell } from './Cell';
 import './Grid.scss';
 
-const crawlConnected = cell => {
-  const { col, row } = cell;
-  const connectedAdjacent = [...col, ...row].filter(adjacent => adjacent !== cell);
-  const connectedUnique = new Map();
+const updateConnected = (cell, uniqueConnected = new Map()) => {
+  delete cell.uniqueConnected;
 
-  const crawlConnected = cell => {
-    const { col, row } = cell;
-    const connectedAdjacent = [...col, ...row].filter(adjacent => adjacent !== cell);
-  };
+  const { nextCells, value } = cell;
+
+  if (value === true) {
+    cell.uniqueConnected = uniqueConnected;
+
+    uniqueConnected.set(cell, true);
+  }
+
+  nextCells.forEach(nextCell => {
+    if (!nextCell || uniqueConnected.get(nextCell)) return;
 
 
-  connectedAdjacent.forEach(cell => iterateConnected(cell));
+    const { value: nextValue } = nextCell;
+
+    if (nextValue === true) {
+      value === true ? updateConnected(nextCell, uniqueConnected) : updateConnected(nextCell);
+    }
+  });
 };
 
 const generate = config => {
-  const { random, round } = Math;
+  // const { random, round } = Math;
   const { xLength, yLength, width, height } = config;
   const cols = [];
   const rows = [];
@@ -25,13 +34,15 @@ const generate = config => {
   for (let y = 0; y < yLength; y += 1) {
     for (let x = 0; x < xLength; x += 1) {
       const offset = { x: x * width, y: y * height };
-      const cell = { config, x, y, offset, value: false, connected: new Map() };
+      const cell = { config, x, y, offset, value: false };
       cell.view = <Cell cell={cell} key={`${x}${y}`} />;
       cell.setDOMRef = DOMRef => { cell.DOMRef = DOMRef; };
       cell.update = () => {
         cell.value = !cell.value;
 
-        crawlConnected(cell);
+        updateConnected(cell);
+
+        window.update();
       };
 
       if (cols[x]) cols[x][y] = cell;
@@ -43,8 +54,14 @@ const generate = config => {
       cell.col = cols[x];
       cell.row = rows[y];
 
-      // if (x === xLength - 1) updateConnectedAdjacently(cell.row);
-      // if (y === yLength - 1) updateConnectedAdjacently(cell.col);
+      setTimeout(() => {
+        cell.nextCells = [
+          cell.col[y - 1],
+          cell.col[y + 1],
+          cell.row[x - 1],
+          cell.row[x + 1]
+        ];
+      });
     }
   }
 
@@ -55,4 +72,12 @@ const matrix = generate({ xLength: 6, yLength: 6, width: 50, height: 50 });
 
 window.matrix = matrix;
 
-export const Grid = () => <div className="grid">{matrix.rows.map(arr => arr.map(cell => cell.view))}</div>;
+export const Grid = () => {
+  const [flag, update] = useState(false);
+
+  window.update = () => update(!flag);
+
+  console.log('render');
+
+  return <div className="grid" key={flag}>{matrix.rows.map(arr => arr.map(cell => cell.view))}</div>;
+};
