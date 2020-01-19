@@ -11,12 +11,15 @@ const defaultGeneratorSettings = { x: { length: 5 }, y: { length: 5 }, cell: { w
 export class Grid extends Component {
   state = {
     generatorSettings: defaultGeneratorSettings,
+    hoveredConnections: null
   }
 
   render() {
     const { generatorSettings } = this.state;
     const { rows, cols, height, width } = generate(generatorSettings);
     const matrix = cols || rows;
+
+    console.log(this.state.hoveredConnections);
 
     return (
       <div className="grid">

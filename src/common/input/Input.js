@@ -4,17 +4,22 @@ import { Slider, Switch } from './types';
 import './Input.scss';
 
 const types = {
-  Slider,
-  Switch
+  Slider: {
+    input: Slider,
+    isValueLabelAllowed: true
+  },
+  Switch: {
+    input: Switch,
+  },
 };
 
 export const Input = props => {
-  const { type, label } = props;
-  const Component = types[type];
+  const { type, label, value } = props;
+  const { isValueLabelAllowed, input: Component } = types[type];
 
   return (
     <div className="input">
-      <InputLabel>{label}</InputLabel>
+      <InputLabel>{label}{`${isValueLabelAllowed ? `: ${value}` : ''}`}</InputLabel>
       <Component {...props} />
     </div>
   );
