@@ -6,20 +6,24 @@ import { Controls } from './controls';
 import './Grid.scss';
 
 const generate = memoize(grid.generate);
-const defaultGeneratorSettings = { x: { length: 5 }, y: { length: 5 }, cell: { width: 50, height: 50 } };
+const defaultGeneratorSettings = {
+  x: { length: 5 },
+  y: { length: 5 },
+  cell: { width: 50, height: 50, value: false },
+  includeDiagonal: false
+};
 
 export class Grid extends Component {
   state = {
     generatorSettings: defaultGeneratorSettings,
-    hoveredConnections: null
+    hoveredConnections: null,
+    lastClickedCell: null
   }
 
   render() {
     const { generatorSettings } = this.state;
     const { rows, cols, height, width } = generate(generatorSettings);
     const matrix = cols || rows;
-
-    console.log(this.state.hoveredConnections);
 
     return (
       <div className="grid">

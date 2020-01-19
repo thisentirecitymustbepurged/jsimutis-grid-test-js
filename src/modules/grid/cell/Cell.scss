@@ -6,15 +6,19 @@
   justify-content: center;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
+  color: white;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);
+  font-weight: bold;
+  font-size: 20px;
   transition: all 0.1s ease-out;
   user-select: none;
   &.active {
-    background: #F79191
+    background: #A3CFF2
   }
   &.hover {
     z-index: 2;
-    border: 0;
-    background: #FC3D3D;
+    border: 1px solid #2196F3;
+    background: #2196F3;
     transform: scale(1.1);
   }
 }

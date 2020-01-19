@@ -1,5 +1,5 @@
 const generate = config => {
-  const { x: { length: xLength }, y: { length: yLength }, cell: { width, height }, includeDiagonal } = config;
+  const { x: { length: xLength }, y: { length: yLength }, cell: cellConf, cell: { width, height }, includeDiagonal } = config;
   const grid = {
     cols: [],
     rows: [],
@@ -12,7 +12,8 @@ const generate = config => {
   for (let y = 0; y < yLength; y += 1) {
     for (let x = 0; x < xLength; x += 1) {
       const offset = { x: x * width, y: y * height };
-      const cell = { config, x, y, offset, width, height, value: false };
+      const cell = { ...cellConf, config, x, y, offset, cellsByIndex };
+      cell.setRef = ref => { cell.ref = ref; };
 
       if (cols[x]) cols[x][y] = cell;
       else cols[x] = [cell];
@@ -20,7 +21,7 @@ const generate = config => {
       if (rows[y]) rows[y][x] = cell;
       else rows[y] = [cell];
 
-      cellsByIndex[`${x}${y}`] = cell;
+      cellsByIndex[`x${x}y${y}`] = cell;
 
       cell.col = cols[x];
       cell.row = rows[y];
@@ -32,10 +33,10 @@ const generate = config => {
           cell.row[x - 1],
           cell.row[x + 1],
           ...(includeDiagonal ? [
-            cellsByIndex[`${x - 1}${y - 1}`],
-            cellsByIndex[`${x + 1}${y - 1}`],
-            cellsByIndex[`${x + 1}${y + 1}`],
-            cellsByIndex[`${x - 1}${y + 1}`]
+            cellsByIndex[`x${x - 1}y${y - 1}`],
+            cellsByIndex[`x${x + 1}y${y - 1}`],
+            cellsByIndex[`x${x + 1}y${y + 1}`],
+            cellsByIndex[`x${x - 1}y${y + 1}`]
           ] : [])
         ];
       });

@@ -2,6 +2,8 @@ import React from 'react';
 import './Cell.scss';
 
 const updateConnections = (cell, connections = new Map()) => {
+  console.log('TCL: updateConnections -> cell', cell);
+
   delete cell.connections;
   const { nextCells, value } = cell;
 
@@ -22,13 +24,15 @@ const updateConnections = (cell, connections = new Map()) => {
 };
 
 export const Cell = ({ cell, Grid }) => {
-  const { hoveredConnections } = Grid.state;
-  const { value, offset, connections, width, height } = cell;
+  const { hoveredConnections, lastClickedCell } = Grid.state;
+  const { value, offset, connections, width, height, setRef } = cell;
   const { x: left, y: top } = offset;
   const style = { width, height, left, top };
-  const className = `cell${hoveredConnections && hoveredConnections.get(cell) ? ' hover' : ''}${connections && connections.get(cell) ? ' active' : ''}`;
-  const setHoveredConnections = (event, latestCell = cell) => {
-    Grid.setState({ hoveredConnections: latestCell.connections });
+  const hoveredConnectionsClass = hoveredConnections && hoveredConnections.get(cell) ? ' hover' : '';
+  const connectionsClass = connections && connections.get(cell) ? ' active' : '';
+  const className = `cell${connectionsClass}${hoveredConnectionsClass}`;
+  const setHoveredConnections = () => {
+    Grid.setState({ hoveredConnections: connections });
   };
   const unsetHoveredConnections = () => {
     Grid.setState({ hoveredConnections: null });
@@ -36,13 +40,22 @@ export const Cell = ({ cell, Grid }) => {
   const onClick = () => {
     cell.value = !value;
     updateConnections(cell);
-    cell.value ? setHoveredConnections(null, cell) : unsetHoveredConnections();
-    Grid.forceUpdate();
+    Grid.setState({
+      lastClickedCell: cell,
+      hoveredConnections: cell.value ? cell.connections : null
+    });
   };
 
   return (
-    <div className={className} style={style} onClick={onClick} onMouseEnter={setHoveredConnections} onMouseLeave={unsetHoveredConnections}>
-      {connections ? connections.size : 0}
+    <div
+      className={className}
+      style={style}
+      onClick={onClick}
+      onMouseEnter={setHoveredConnections}
+      onMouseLeave={unsetHoveredConnections}
+      ref={setRef}
+    >
+      {lastClickedCell === cell && connections && connections.size}
     </div>
   );
 };
