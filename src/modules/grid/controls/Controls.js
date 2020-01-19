@@ -7,7 +7,7 @@ import './Controls.scss';
 const controls = [{
   type: 'Switch',
   path: 'generatorSettings.includeDiagonal',
-  label: 'Allow diagonal connections'
+  label: 'Allow diagonal connections',
 }, {
   type: 'Slider',
   path: 'generatorSettings.x.length',
@@ -37,9 +37,11 @@ export const Controls = ({ Grid }) => (
       const props = {
         ...el,
         value: get(target, path),
-        onChange: (e, value) => Grid.setState({
-          [targetName]: set({ ...target }, path, value)
-        }),
+        onChange: (e, value) => {
+          Grid.setState({
+            [targetName]: set({ ...target }, path, value)
+          });
+        },
         key
       };
 

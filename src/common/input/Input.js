@@ -10,17 +10,36 @@ const types = {
   },
   Switch: {
     input: Switch,
+    throttle: false
   },
 };
 
-export const Input = props => {
-  const { type, label, value } = props;
-  const { isValueLabelAllowed, input: Component } = types[type];
+export class Input extends React.Component {
+  state = {
+    value: this.props.value
+  }
 
-  return (
-    <div className="input">
-      <InputLabel>{label}{`${isValueLabelAllowed ? `: ${value}` : ''}`}</InputLabel>
-      <Component {...props} />
-    </div>
-  );
-};
+  timeout = undefined;
+
+  render() {
+    const { type, label, onChange } = this.props;
+    const { isValueLabelAllowed, input: Component, throttle = true } = types[type];
+    const props = throttle ? {
+      ...this.props,
+      onChange: (e, value) => {
+        this.setState({ value });
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => onChange(e, value), 200);
+      },
+      value: this.state.value
+    } : this.props;
+    const { value } = props;
+
+    return (
+      <div className="input">
+        <InputLabel>{label}{`${isValueLabelAllowed ? `: ${value}` : ''}`}</InputLabel>
+        <Component {...props} />
+      </div>
+    );
+  }
+}

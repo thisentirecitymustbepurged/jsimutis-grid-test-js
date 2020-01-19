@@ -2,8 +2,6 @@ import React from 'react';
 import './Cell.scss';
 
 const updateConnections = (cell, connections = new Map()) => {
-  console.log('TCL: updateConnections -> cell', cell);
-
   delete cell.connections;
   const { nextCells, value } = cell;
 
