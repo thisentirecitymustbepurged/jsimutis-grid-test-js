@@ -1,3 +1,8 @@
-.body {
-  position: relative;
+.grid-body {
+  > div {
+    position: relative;
+    border-top:1px solid #ccc;
+    border-left:1px solid #ccc;
+    transition: all 0.2s ease-out;
+  }
 }

@@ -17,10 +17,6 @@ export class Loader extends React.Component {
     const { children } = this.props;
 
 
-    return (
-      <div className="loader">
-        {loading ? 'Loading...' : children}
-      </div>
-    );
+    return loading ? <CircularProgress /> : children;
   }
 }

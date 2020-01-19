@@ -7,8 +7,10 @@ export const Body = ({ Grid }) => {
   const matrix = cols || rows;
 
   return (
-    <div className="grid__body" style={{ height, width }}>
-      {matrix.map(cells => cells.map(c => <Cell Grid={Grid} cell={c} key={`${c.x}${c.y}`} />))}
+    <div className="grid-body">
+      <div style={{ height, width }}>
+        {matrix.map(cells => cells.map(c => <Cell Grid={Grid} cell={c} key={`${c.x}${c.y}`} />))}
+      </div>
     </div>
   );
 };
