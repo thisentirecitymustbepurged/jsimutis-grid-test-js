@@ -1,5 +1,11 @@
-const generate = config => {
-  const { x: { length: xLength }, y: { length: yLength }, cell: cellConf, cell: { width, height }, includeDiagonal } = config;
+const generate = async config => {
+  const {
+    x: { length: xLength },
+    y: { length: yLength },
+    cell: cellConf,
+    cell: { width, height, callback },
+    includeDiagonal
+  } = config;
   const grid = {
     cols: [],
     rows: [],
@@ -8,6 +14,7 @@ const generate = config => {
     height: yLength * height
   };
   const { cols, rows, cellsByIndex } = grid;
+  const promises = [];
 
   for (let y = 0; y < yLength; y += 1) {
     for (let x = 0; x < xLength; x += 1) {
@@ -26,7 +33,7 @@ const generate = config => {
       cell.col = cols[x];
       cell.row = rows[y];
 
-      setTimeout(() => {
+      promises.push(new Promise(resolve => setTimeout(() => {
         cell.nextCells = [
           cell.col[y - 1],
           cell.col[y + 1],
@@ -39,9 +46,13 @@ const generate = config => {
             cellsByIndex[`x${x - 1}y${y + 1}`]
           ] : [])
         ];
-      });
+
+        callback ? setTimeout(() => { callback(cell); resolve(); }) : resolve();
+      })));
     }
   }
+
+  await Promise.all(promises);
 
   return grid;
 };

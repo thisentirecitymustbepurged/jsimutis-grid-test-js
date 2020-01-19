@@ -8,17 +8,17 @@
   border-bottom: 1px solid #ccc;
   color: white;
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);
+  line-height: 100%;
   font-weight: bold;
-  font-size: 20px;
   transition: all 0.2s ease-in-out;
   user-select: none;
   &.active {
-    background: #A3CFF2
+    // background: #A3CFF2
   }
   &.hover {
     z-index: 2;
-    border: 1px solid #2196F3;
-    background: #2196F3;
+    // border: 1px solid #2196F3;
+    // background: #2196F3;
     transform: scale(1.1);
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Cell.scss';
 
-const updateConnections = (cell, connections = new Map()) => {
+export const updateConnections = (cell, connections = new Map()) => {
   delete cell.connections;
   const { nextCells, value } = cell;
 
@@ -22,13 +22,21 @@ const updateConnections = (cell, connections = new Map()) => {
 };
 
 export const Cell = ({ cell, Grid }) => {
-  const { hoveredConnections, lastClickedCell } = Grid.state;
+  const { hoveredConnections, lastClickedCell, settings: { connectionColor, connectionHoverColor } } = Grid.state;
   const { value, offset, connections, width, height, setRef } = cell;
   const { x: left, y: top } = offset;
-  const style = { width, height, left, top };
-  const hoveredConnectionsClass = hoveredConnections && hoveredConnections.get(cell) ? ' hover' : '';
-  const connectionsClass = connections && connections.get(cell) ? ' active' : '';
-  const className = `cell${connectionsClass}${hoveredConnectionsClass}`;
+  const activeClass = connections && connections.get(cell) ? ' active' : '';
+  const hoverClass = hoveredConnections && hoveredConnections.get(cell) ? ' hover' : '';
+  const className = `cell${activeClass}${hoverClass}`;
+  const style = {
+    width,
+    height,
+    left,
+    top,
+    background: activeClass ? hoverClass ? connectionHoverColor : connectionColor : '',
+    borderColor: hoverClass && connectionHoverColor,
+    fontSize: (width + height) / 3
+  };
   const setHoveredConnections = () => {
     Grid.setState({ hoveredConnections: connections });
   };

@@ -1,0 +1,10 @@
+.color {
+  position: relative;
+
+  input[type="color"] {
+    position: absolute;
+    left: 150px;
+    top: 3px;
+    border: 0;
+  }
+}

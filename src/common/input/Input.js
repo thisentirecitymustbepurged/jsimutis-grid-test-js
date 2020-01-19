@@ -1,6 +1,6 @@
 import React from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
-import { Slider, Switch } from './types';
+import { Slider, Switch, Color } from './types';
 import './Input.scss';
 
 const types = {
@@ -10,6 +10,10 @@ const types = {
   },
   Switch: {
     input: Switch,
+    throttle: false
+  },
+  Color: {
+    input: Color,
     throttle: false
   },
 };

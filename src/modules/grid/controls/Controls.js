@@ -24,6 +24,14 @@ const controls = [{
   type: 'Slider',
   path: 'generatorSettings.cell.height',
   label: 'Cell height'
+}, {
+  type: 'Color',
+  path: 'settings.connectionColor',
+  label: 'Connection color'
+}, {
+  type: 'Color',
+  path: 'settings.connectionHoverColor',
+  label: 'Hover color'
 }];
 
 export const Controls = ({ Grid }) => (
