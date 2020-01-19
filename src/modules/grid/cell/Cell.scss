@@ -1,14 +1,9 @@
-.grid {
-  margin: 50px;
-  position: relative;
-}
-
 .cell {
   box-sizing: border-box;
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-right: 1px solid;
-  border-bottom: 1px solid;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
