@@ -44,11 +44,13 @@ export const Cell = ({ cell, Grid }) => {
     Grid.setState({ hoveredConnections: null });
   };
   const onClick = () => {
-    if (isEditable) cell.value = !value;
-    updateConnections(cell);
+    if (isEditable) {
+      cell.value = !value;
+      updateConnections(cell);
+    }
     Grid.setState({
-      lastClickedCell: cell,
-      hoveredConnections: cell.value ? cell.connections : null
+      ...(isEditable ? { lastClickedCell: cell } : cell.value && { lastClickedCell: cell }),
+      ...(isEditable && { hoveredConnections: cell.value ? cell.connections : null })
     });
   };
 
