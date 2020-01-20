@@ -1,6 +1,8 @@
 import React from 'react';
 import set from 'lodash/set';
 import get from 'lodash/get';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Input } from 'common';
 import './Controls.scss';
 
@@ -34,9 +36,19 @@ const controls = [{
   label: 'Hover color'
 }];
 
-export const Controls = ({ Grid }) => (
-  <div className="controls">
-    {controls.map((el, key) => {
+export class Controls extends React.Component {
+  state = { expanded: false, height: 0 }
+
+  expand = expanded => this.setState({ expanded })
+
+  setHeight = ref => this.setState({ height: ref ? ref.offsetHeight : 0 })
+
+  render() {
+    const { height, expanded } = this.state;
+    console.log('TCL: Controls -> render -> expanded', expanded);
+    console.log('TCL: Controls -> render -> height', height);
+    const { Grid } = this.props;
+    const components = controls.map((el, key) => {
       const { type, component } = el;
       const path = el.path.split('.');
       const Component = type ? Input : component;
@@ -54,6 +66,27 @@ export const Controls = ({ Grid }) => (
       };
 
       return <Component {...props} />;
-    })}
-  </div>
-);
+    });
+
+    return (
+      <>
+        {expanded && <div className="controls__overlay" onClick={() => this.expand(false)} />}
+        <div className={`controls${expanded ? ' expanded' : ''}`}>
+          <div className="controls__title-bar" onClick={() => this.expand(!expanded)}>
+            <div className="controls__expand">{expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />} Settings</div>
+          </div>
+          <div className="controls__content-wrapper">
+            {expanded && (
+              <div className="controls__content-height-provider" ref={this.setHeight}>
+                {components}
+              </div>
+            )}
+            <div className="controls__content" style={{ height }}>
+              {components}
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+}

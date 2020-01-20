@@ -40,7 +40,7 @@ export class Input extends React.Component {
     const { value } = props;
 
     return (
-      <div className="input">
+      <div className="input" onClick={e => { e.stopPropagation(); }}>
         <InputLabel>{label}{`${isValueLabelAllowed ? `: ${value}` : ''}`}</InputLabel>
         <Component {...props} />
       </div>

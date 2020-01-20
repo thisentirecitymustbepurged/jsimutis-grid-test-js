@@ -1,8 +1,68 @@
 .controls {
-  display: flex;
-  flex-wrap: wrap;
-  > * {
-    margin-right: 40px;
-    margin-bottom: 20px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  background: #eee;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+  &__title-bar {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    padding: 0 24px;
+    cursor: pointer;
+  }
+  &__expand {
+    display: flex;
+    align-items: center;
+    svg {
+      margin-bottom: -2px;
+    }
+    > * {
+      margin-right: 7px;
+    }
+  }
+  &__content-height-provider {
+    position: fixed;
+    top: -5000px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 24px;
+
+    > * {
+      margin-right: 40px;
+      margin-bottom: 20px;
+    }
+  }
+  &__content {
+    height: 0;
+    margin-right: auto;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    transition: all 0.5s ease-out;
+    padding: 0 24px;
+
+    > * {
+      margin-right: 40px;
+      margin-bottom: 20px;
+    }
+  }
+  &__overlay {
+    z-index: 9;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+  }
+  &.expanded {
+    .controls {
+      &__content-wrapper {
+        height: auto;
+      }
+    }
   }
 }
