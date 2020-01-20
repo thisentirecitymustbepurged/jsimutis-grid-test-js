@@ -22,7 +22,7 @@ export const updateConnections = (cell, connections = new Map()) => {
 };
 
 export const Cell = ({ cell, Grid }) => {
-  const { hoveredConnections, lastClickedCell, settings: { connectionColor, connectionHoverColor } } = Grid.state;
+  const { hoveredConnections, lastClickedCell, settings: { connectionColor, connectionHoverColor, isEditable } } = Grid.state;
   const { value, offset, connections, width, height, setRef } = cell;
   const { x: left, y: top } = offset;
   const activeClass = connections && connections.get(cell) ? ' active' : '';
@@ -44,7 +44,7 @@ export const Cell = ({ cell, Grid }) => {
     Grid.setState({ hoveredConnections: null });
   };
   const onClick = () => {
-    cell.value = !value;
+    if (isEditable) cell.value = !value;
     updateConnections(cell);
     Grid.setState({
       lastClickedCell: cell,

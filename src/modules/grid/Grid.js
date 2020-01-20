@@ -28,7 +28,8 @@ export class Grid extends Component {
 
   defaultSettings = {
     connectionColor: '#A3CFF2',
-    connectionHoverColor: '#2196F3'
+    connectionHoverColor: '#2196F3',
+    isEditable: false
   }
 
   state = {

@@ -1,16 +1,11 @@
 import React from 'react';
 import set from 'lodash/set';
 import get from 'lodash/get';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Input } from 'common';
 import './Controls.scss';
 
 const controls = [{
-  type: 'Switch',
-  path: 'generatorSettings.includeDiagonal',
-  label: 'Allow diagonal connections',
-}, {
   type: 'Slider',
   path: 'generatorSettings.x.length',
   label: 'Horizontal length'
@@ -34,6 +29,14 @@ const controls = [{
   type: 'Color',
   path: 'settings.connectionHoverColor',
   label: 'Hover color'
+}, {
+  type: 'Switch',
+  path: 'generatorSettings.includeDiagonal',
+  label: 'Allow diagonal connections',
+}, {
+  type: 'Switch',
+  path: 'settings.isEditable',
+  label: 'Allow grid editing',
 }];
 
 export class Controls extends React.Component {
@@ -45,8 +48,6 @@ export class Controls extends React.Component {
 
   render() {
     const { height, expanded } = this.state;
-    console.log('TCL: Controls -> render -> expanded', expanded);
-    console.log('TCL: Controls -> render -> height', height);
     const { Grid } = this.props;
     const components = controls.map((el, key) => {
       const { type, component } = el;
@@ -73,7 +74,7 @@ export class Controls extends React.Component {
         {expanded && <div className="controls__overlay" onClick={() => this.expand(false)} />}
         <div className={`controls${expanded ? ' expanded' : ''}`}>
           <div className="controls__title-bar" onClick={() => this.expand(!expanded)}>
-            <div className="controls__expand">{expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />} Settings</div>
+            <div className="controls__expand"><ExpandMoreIcon /> Settings</div>
           </div>
           <div className="controls__content-wrapper">
             {expanded && (
