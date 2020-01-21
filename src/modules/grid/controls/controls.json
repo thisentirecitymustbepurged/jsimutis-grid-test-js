@@ -55,12 +55,12 @@
     "type": "Switch",
     "path": "generatorSettings.includeDiagonal",
     "label": "Allow diagonal connections",
-    "tooltip": "The test requested only non-diagonal cells to be considered \"connected\"... how boring is that? Could get a bit hot with a large grid, tho."
+    "tooltip": "The test requested only non-diagonal cells to be considered \"connected\"... what if? Could get a bit hot with a large grid, tho."
   },
   {
     "type": "Switch",
     "path": "settings.isEditable",
     "label": "Allow connection editing",
-    "tooltip": "Clicking on a cell will activate/deactivate it and connections will be recalculated. Don't ask me why this is not part of the test itself."
+    "tooltip": "Clicking on a cell will activate/deactivate it and connections will be recalculated."
   }
 ]

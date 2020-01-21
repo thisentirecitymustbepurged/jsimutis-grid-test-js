@@ -1,8 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm run serve`
+
+Serves the bundled app created by `npm run build`.<br />
+Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 
 ### `npm start`
 

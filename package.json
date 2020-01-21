@@ -1,6 +1,5 @@
 {
   "name": "jazznetworks-vaion-test",
-  "homepage": "https://thisentirecitymustbepurged.github.io/jazznetworks-vaion-test/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -15,9 +14,11 @@
     "node-sass": "^4.13.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.3.0",
+    "serve": "^11.3.0"
   },
   "scripts": {
+    "serve": "node ./node_modules/serve/bin/serve.js build -p 8080",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
