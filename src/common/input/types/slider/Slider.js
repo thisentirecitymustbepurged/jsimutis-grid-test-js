@@ -4,26 +4,31 @@ import Tooltip from '@material-ui/core/Tooltip';
 import './Slider.scss';
 
 const marks = [
-  {
-    value: 0,
-    label: '0',
-  },
-  {
-    value: 100,
-    label: '100',
-  },
+  0,
+  100
 ];
 
-function ValueLabelComponent(props) {
+const ValueLabelComponent = multiplier => (props) => {
   const { children, open, value } = props;
 
   return (
-    <Tooltip open={open} enterTouchDelay={0} placement="top" title={value}>
+    <Tooltip open={open} enterTouchDelay={0} placement="top" title={value * multiplier}>
       {children}
     </Tooltip>
   );
-}
+};
 
-export const Slider = props => (
-  <MUISlider {...props} ValueLabelComponent={ValueLabelComponent} className="slider" marks={marks} />
-);
+export const Slider = props => {
+  const { multiplier = 1, onChange, value } = props;
+
+  return (
+    <MUISlider
+      {...props}
+      onChange={(e, value) => onChange(e, value * multiplier)}
+      value={value / multiplier}
+      // ValueLabelComponent={ValueLabelComponent(multiplier)}
+      className="slider"
+      marks={marks.map(value => ({ value, label: value * multiplier }))}
+    />
+  );
+};

@@ -2,42 +2,10 @@ import React from 'react';
 import set from 'lodash/set';
 import get from 'lodash/get';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { Input } from 'common';
+import controls from './controls.json';
 import './Controls.scss';
-
-const controls = [{
-  type: 'Slider',
-  path: 'generatorSettings.x.length',
-  label: 'Horizontal length'
-}, {
-  type: 'Slider',
-  path: 'generatorSettings.y.length',
-  label: 'Vertical length'
-}, {
-  type: 'Slider',
-  path: 'generatorSettings.cell.width',
-  label: 'Cell width'
-}, {
-  type: 'Slider',
-  path: 'generatorSettings.cell.height',
-  label: 'Cell height'
-}, {
-  type: 'Color',
-  path: 'settings.connectionColor',
-  label: 'Connection color'
-}, {
-  type: 'Color',
-  path: 'settings.connectionHoverColor',
-  label: 'Hover color'
-}, {
-  type: 'Switch',
-  path: 'generatorSettings.includeDiagonal',
-  label: 'Allow diagonal connections',
-}, {
-  type: 'Switch',
-  path: 'settings.isEditable',
-  label: 'Allow grid editing',
-}];
 
 export class Controls extends React.Component {
   state = { expanded: false, height: 0 }
@@ -49,6 +17,7 @@ export class Controls extends React.Component {
   render() {
     const { height, expanded } = this.state;
     const { Grid } = this.props;
+    const { state: { loading } } = Grid;
     const components = controls.map((el, key) => {
       const { type, component } = el;
       const path = el.path.split('.');
@@ -74,7 +43,11 @@ export class Controls extends React.Component {
         {expanded && <div className="controls__overlay" onClick={() => this.expand(false)} />}
         <div className={`controls${expanded ? ' expanded' : ''}`}>
           <div className="controls__title-bar" onClick={() => this.expand(!expanded)}>
-            <div className="controls__expand"><ExpandMoreIcon /> Settings</div>
+            <div className="controls__expand">
+              <ExpandMoreIcon />
+              <span>Settings</span>
+              {loading && <CircularProgress size={20} />}
+            </div>
           </div>
           <div className="controls__content-wrapper">
             {expanded && (

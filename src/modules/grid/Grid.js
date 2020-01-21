@@ -7,7 +7,7 @@ import { Body } from './body';
 import { Controls } from './controls';
 import './Grid.scss';
 
-const { round, random } = Math;
+const { round, random, max } = Math;
 const generate = memoize(grid.generate);
 
 export class Grid extends Component {
@@ -19,17 +19,20 @@ export class Grid extends Component {
       width: 100,
       height: 100,
       callback(cell) {
-        cell.value = !!round(random());
+        const probability = cell.config.probability / 100;
+        cell.value = !!round(probability ? (random() / 2 + 0.5 * probability) : 0);
 
         updateConnections(cell);
       }
     },
+    probability: 50,
   };
 
   defaultSettings = {
     connectionColor: '#A3CFF2',
     connectionHoverColor: '#2196F3',
-    isEditable: false
+    isEditable: false,
+    isCellIndexShown: false
   }
 
   state = {
@@ -38,12 +41,15 @@ export class Grid extends Component {
     hoveredConnections: null,
     lastClickedCell: null,
     grid: null,
+    loading: false
   }
 
   generate = async () => {
+    this.setState({ loading: true });
+
     const grid = await generate(this.state.generatorSettings);
 
-    this.setState({ grid });
+    this.setState({ grid, loading: false });
   }
 
   render() {

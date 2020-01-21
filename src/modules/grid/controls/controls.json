@@ -1,0 +1,66 @@
+[
+  {
+    "type": "Slider",
+    "multiplier": 5,
+    "path": "generatorSettings.x.length",
+    "label": "Horizontal length",
+    "suffix": " cells",
+    "tooltip": "The grid is using virtualised rendering, but still, be gentle with these... I am not liable for any frozen tabs."
+  },
+  {
+    "type": "Slider",
+    "multiplier": 5,
+    "path": "generatorSettings.y.length",
+    "label": "Vertical length",
+    "suffix": " cells",
+    "tooltip": "The grid is using virtualised rendering, but still, be gentle with these... I am not liable for any frozen tabs."
+  },
+  {
+    "type": "Slider",
+    "multiplier": 2,
+    "path": "generatorSettings.cell.width",
+    "suffix": "px",
+    "label": "Cell width"
+  },
+  {
+    "type": "Slider",
+    "multiplier": 2,
+    "path": "generatorSettings.cell.height",
+    "suffix": "px",
+    "label": "Cell height"
+  },
+  {
+    "type": "Color",
+    "path": "settings.connectionColor",
+    "label": "Connection color"
+  },
+  {
+    "type": "Color",
+    "path": "settings.connectionHoverColor",
+    "label": "Hover color"
+  },
+  {
+    "type": "Slider",
+    "path": "generatorSettings.probability",
+    "label": "Active cell probability",
+    "suffix": "%",
+    "tooltip": "Math.random -- very random."
+  },
+  {
+    "type": "Switch",
+    "path": "settings.isCellIndexShown",
+    "label": "Show cell index"
+  },
+  {
+    "type": "Switch",
+    "path": "generatorSettings.includeDiagonal",
+    "label": "Allow diagonal connections",
+    "tooltip": "The test requested only non-diagonal cells to be considered \"connected\"... how boring is that? Could get a bit hot with a large grid, tho."
+  },
+  {
+    "type": "Switch",
+    "path": "settings.isEditable",
+    "label": "Allow connection editing",
+    "tooltip": "Clicking on a cell will activate/deactivate it and connections will be recalculated. Don't ask me why this is not part of the test itself."
+  }
+]

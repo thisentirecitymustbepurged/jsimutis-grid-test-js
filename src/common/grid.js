@@ -2,7 +2,6 @@ const generate = async config => {
   const {
     x: { length: xLength },
     y: { length: yLength },
-    cell: cellConf,
     cell: { width, height, callback },
     includeDiagonal
   } = config;
@@ -11,15 +10,16 @@ const generate = async config => {
     rows: [],
     cellsByIndex: {},
     width: xLength * width,
-    height: yLength * height
+    height: yLength * height,
+    config
   };
   const { cols, rows, cellsByIndex } = grid;
-  const promises = [];
+  const cellProcess = [];
 
   for (let y = 0; y < yLength; y += 1) {
     for (let x = 0; x < xLength; x += 1) {
       const offset = { x: x * width, y: y * height };
-      const cell = { ...cellConf, config, x, y, offset, cellsByIndex };
+      const cell = { width, height, config, x, y, offset, cellsByIndex };
       cell.setRef = ref => { cell.ref = ref; };
 
       if (cols[x]) cols[x][y] = cell;
@@ -33,7 +33,7 @@ const generate = async config => {
       cell.col = cols[x];
       cell.row = rows[y];
 
-      promises.push(new Promise(resolve => setTimeout(() => {
+      cellProcess.push(new Promise(resolve => setTimeout(() => {
         cell.nextCells = [
           cell.col[y - 1],
           cell.col[y + 1],
@@ -52,7 +52,7 @@ const generate = async config => {
     }
   }
 
-  await Promise.all(promises);
+  await Promise.all(cellProcess);
 
   return grid;
 };

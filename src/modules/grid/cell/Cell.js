@@ -22,7 +22,7 @@ export const updateConnections = (cell, connections = new Map()) => {
 };
 
 export const Cell = ({ cell, Grid }) => {
-  const { hoveredConnections, lastClickedCell, settings: { connectionColor, connectionHoverColor, isEditable } } = Grid.state;
+  const { hoveredConnections, lastClickedCell, settings: { connectionColor, connectionHoverColor, isEditable, isCellIndexShown } } = Grid.state;
   const { value, offset, connections, width, height, setRef } = cell;
   const { x: left, y: top } = offset;
   const activeClass = connections && connections.get(cell) ? ' active' : '';
@@ -63,7 +63,8 @@ export const Cell = ({ cell, Grid }) => {
       onMouseLeave={unsetHoveredConnections}
       ref={setRef}
     >
-      {lastClickedCell === cell && connections && connections.size}
+      {lastClickedCell === cell && connections && <div>{connections.size}</div>}
+      {isCellIndexShown && <div style={{ fontSize: 12 }}>x{cell.x}y{cell.y}</div>}
     </div>
   );
 };
