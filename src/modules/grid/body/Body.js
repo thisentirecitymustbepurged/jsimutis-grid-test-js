@@ -25,7 +25,7 @@ export class Body extends React.Component {
     const x1 = max(floor((scrollLeft - offsetLeft) / cellWidth) - 1, 0);
     const x2 = x1 + ceil(viewWidth / cellWidth) + 1;
     const y1 = max(floor((scrollTop - offsetTop) / cellHeight) - 1, 0);
-    const y2 = y1 + ceil(viewHeight / cellWidth) + 1;
+    const y2 = y1 + ceil(viewHeight / cellHeight) + 1;
 
     clearTimeout(this.timeout);
     this && setTimeout(this.setState.bind(this, { visible: { x1, x2, y1, y2 } }), 10);

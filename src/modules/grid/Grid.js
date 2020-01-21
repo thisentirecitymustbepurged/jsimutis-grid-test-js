@@ -7,7 +7,7 @@ import { Body } from './body';
 import { Controls } from './controls';
 import './Grid.scss';
 
-const { round, random, max } = Math;
+const { round, random } = Math;
 const generate = memoize(grid.generate);
 
 export class Grid extends Component {
